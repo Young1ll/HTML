@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="05-02.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="formWidow">
+        <div class="box_title">
+            <h1>당신이 좋아하는 과일을 선택해 보세요.</h1>
+        </div>
+        <form name="myForm" action="result.html" method="post">
+            <div>
+                <div class="inFormDiv">
+                    <label for="name" name="name">이름<span class="subtxt">(필수)</span></label>
+                    <input type="text" name="name" id="name" required placeholder="이름을 입력하세요">
+                </div>
+                <div class="inFormDiv">
+                    <label for="password" password="password">비밀번호<span class="subtxt">(필수)</span></label>
+                    <input type="password" password="password" id="password" required placeholder="비밀번호를 입력하세요">
+                </div>
+
+                <div class="inFormDiv">
+                    <label for="email" name="email">E-mail<span class="subtxt">(선택)</span></label>
+                    <input type="email" name="email" id="email" placeholder="Email을 입력하세요" autofocus>
+                </div>
+
+                <div class="inFormDiv">
+                    <label for="interests" name="interests">좋아하는 과일을 모두 선택하세요.</label>
+                    <div class="inForm_box">
+                        <label class="selector_img" for="interestsC">
+                            <input type="checkbox" name="interests" id="interestsC" required>
+                            <img src="img\img1.png" alt="딸기">
+                        </label>
+                        <label class="selector_img" for="interestsPy">
+                            <input type="checkbox" name="interests" id="interestsPy" required>
+                            <img src="img\img2.png" alt="바나나">
+                        </label>
+                        <label class="selector_img" for="interestsR">
+                            <input type="checkbox" name="interests" id="interestsR" required>
+                            <img src="img\img3.png" alt="사과">
+                        </label>
+                        <label class="selector_img" for="interestsFlu">
+                            <input type="checkbox" name="interests" id="interestsFlu" required>
+                            <img src="img\img4.png" alt="수박">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="inFormDiv">
+                    <input type="submit" name="submit" id="btn" value="결과보기">
+                    <input type="reset" name="reset" id="btn" value="취소">
+                </div>
+                <div class="inFormDiv">
+                    <input type="button" name="submit" id="btn_ext" value="네이버" onclick="javascript:window.open('https://www.naver.com')">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
