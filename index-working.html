@@ -12,19 +12,30 @@
 
 </head>
 <body>
+    <div class="topbar">
+        <header>
+            <p>header</p>
+            <nav>
+                <ul>
+                    <a class="active" href=""><li>개인정보</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                    <a class="collapsible" href=""><li>내용</li></a>
+                </ul>
+            </nav>    
+        </header>
+    </div>
+
     <div class="wrapper_box">
 
-        <div class="topbar">
-            <header>
-                <p>header</p>    
-            </header>
-        </div>
-
-        <div class="flex_box">
+        <div class="cont_box">
             
-            <aside>
+            <aside class="sidebar">
                 <div class="box_pic">
-                    <img class="imgF" src="img/profileimg.jpg" alt="">
+                    <!-- <img class="imgF" src="img/profileimg.jpg" alt=""> -->
                 </div>
                 <div class="box_name">
                     <h1 class="profile_name">Cho Youngill</h1>
@@ -43,20 +54,10 @@
                     <sapn class="tag_lang">R</sapn>
                 </div>
                 
-                <nav>
-                    <ul>
-                        <a class="active" href=""><li>개인정보</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                        <a class="collapsible" href=""><li>내용</li></a>
-                    </ul>
-                </nav>
+                
             </aside>
             
-            <section id="d1">
+            <section id="content">
                 <div class="box">
                     <h2>개인정보<span class="tag">Personal Infomation</span></h2>
                     <ol>
@@ -113,5 +114,18 @@
             
         </div><!-- End felx_box -->
     </div>  <!-- End wrapper -->
+
+    
+    <!-- <script>
+        async function fetchHtmlAsText(url) {
+            return await (await fetch(url)).text();
+        }
+
+        async function importPage(target) {
+            document.querySelector('#' + target).innerHTML = await fetchHtmlAsText(target + '.html');
+        }
+
+        importPage('introduction');
+    </script> -->
 </body>
 </html>

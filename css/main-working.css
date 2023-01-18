@@ -3,155 +3,36 @@
 */
 
 /*GLOBAL*/
-@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans:400');
-@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
-@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 
-
 * {
-    margin: 0 auto;
-    /*font-family: '맑은 고딕';*/
     font-family: 'Noto Sans KR', sans-serif;
-}
-header {
-    margin: 0;
-}
-body {
-    background-color: #bcbcbc;
-}
-
-h2, h3 {
-    font-size: 1em;
-}
-
-
-/*FlexBox*/
-.flex_box {
-    max-width: 800px;
-    /*min-width: 300px;*/
-    position: relative;
-    top: 50px;
-
-    display: flex;
-
-    background-color: #fff;
-    /*border: 1px solid #e2e2e2;*/
-    border-radius: 6px;
-
-    /*padding: 20px;*/
-    z-index: 1000;
-}
-aside {
-    max-width: 180px;
-    margin: 0;
-    
-    /*flex-basis: 100px;*/
-    /*padding: 10px;*/
-
-    border-right: 1px solid #000;
-}
-section {
-    padding: 10px;
-}
-
-
-/***ASIDE***/
-.box_pic {
-    padding: 0;
     margin: 0 auto;
-    
-    border: 1px solid #000;
-    border-radius: 5px;
-    height: 90px;
-    line-height: 90px;
-    max-width: 75px;
-
-    overflow: hidden;
 }
-.box_name,
-.box_lang {
-    margin-bottom: 20px;
-}
-.box_lang {
-    margin-left: 10px;
-    margin-right: 10px;
-    text-align: center;
-}
-.box_name {
-    margin-top: 10px;
-}
-.profile_name,
-.profile_subname {
-    text-align: center;
-    margin: 0;
-}
-.profile_name {
-    font-size: 18px;
-    line-height: 18px;
-    /*font-family: Black han sans;*/
-    /*font-family: 'Hanna', sans-serif;*/
-    /*font-family: 'KoPub Batang', serif;*/
-}
-.profile_subname {
-    font-size: .9em;
-    line-height: 0.9em;
-}
-
-nav ul {
+ul {
     list-style: none;
-    text-decoration: none;
     padding: 0;
 }
-nav a {
-    font-size: .9em;
-    text-decoration: none;
-}
-nav .active li,
-nav .collapsible:hover li {
-    background-color: #ff5555;
-    color: #fff;
-}
-nav li {
-    margin: 0;
-    padding: 5px;
-    margin-bottom: -1px;
-
-    /*border: 1px solid #e2e2e2;*/
+table,
+table th,
+table td {
+    border: 1px solid;
+    border-collapse: collapse;
     box-sizing: border-box;
-}
-nav .active {
-    font-weight: 800;
+
+    padding: 5px;
 }
 
 /**/
-.imgF {
+.wrapper_box {
+    max-width: 600px;
+    border: 1px solid;
+}
+.topbar {
+    border-bottom: 1px solid;
     width: 100%;
-    object-fit: cover;
-    vertical-align: middle;
+    height: 25px;
 }
-.imgL {
-    max-width: 400px;
-}
-.imgM {
-    max-width: 200px;
-}
-.imgS {
-    max-width: 80px;
-}
+.cont_box {
 
-
-.tag {
-    font-size: .8em;
-    padding: 0 5px 0 5px;
-}
-.tag_lang {
-    font-size: .6em;
-    padding: 2px 3px 2px 3px;
-
-    border: 1px solid #e2e2e2;
-    border-radius: 4px;
-}
-.tag_lang:hover {
-    font-weight: 800;
 }
