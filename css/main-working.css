@@ -1,6 +1,14 @@
+/* version : 0.1.0
+/*
+*/
+
+/*GLOBAL*/
 * {
     margin: 0 auto;
     font-family: '맑은 고딕';
+}
+header {
+    margin: 0;
 }
 body {
     background-color: #bcbcbc;
@@ -11,7 +19,10 @@ h1 {
 h2, h3 {
     font-size: 1em;
 }
-.wrapper_box {
+
+
+/*FlexBox*/
+.flex_box {
     max-width: 800px;
     /*min-width: 300px;*/
     position: relative;
@@ -26,11 +37,9 @@ h2, h3 {
     /*padding: 20px;*/
     z-index: 1000;
 }
-
-
-/*FlexBox*/
 aside {
     max-width: 180px;
+    margin: 0;
     
     /*flex-basis: 100px;*/
     /*padding: 10px;*/
@@ -43,6 +52,18 @@ section {
 
 
 /***ASIDE***/
+.box_pic {
+    padding: 0;
+    
+    border: 1px solid #000;
+    border-radius: 5px;
+    height: 90px;
+    line-height: 90px;
+    max-width: 90px;
+
+    overflow: hidden;
+}
+
 .box_title,
 .box_lang {
     margin-bottom: 20px;
@@ -82,9 +103,21 @@ nav .active {
     font-weight: 800;
 }
 
-
-
-
+/**/
+.imgF {
+    width: 100%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.imgL {
+    max-width: 400px;
+}
+.imgM {
+    max-width: 200px;
+}
+.imgS {
+    max-width: 80px;
+}
 .mainTitle {
     text-align: center;
 }
