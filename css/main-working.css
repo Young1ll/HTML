@@ -3,9 +3,16 @@
 */
 
 /*GLOBAL*/
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans:400');
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+
 * {
     margin: 0 auto;
-    font-family: '맑은 고딕';
+    /*font-family: '맑은 고딕';*/
+    font-family: 'Noto Sans KR', sans-serif;
 }
 header {
     margin: 0;
@@ -13,9 +20,7 @@ header {
 body {
     background-color: #bcbcbc;
 }
-h1 {
-    font-size: 18px;
-}
+
 h2, h3 {
     font-size: 1em;
 }
@@ -54,27 +59,43 @@ section {
 /***ASIDE***/
 .box_pic {
     padding: 0;
+    margin: 0 auto;
     
     border: 1px solid #000;
     border-radius: 5px;
     height: 90px;
     line-height: 90px;
-    max-width: 90px;
+    max-width: 75px;
 
     overflow: hidden;
 }
-
-.box_title,
+.box_name,
 .box_lang {
     margin-bottom: 20px;
 }
 .box_lang {
     margin-left: 10px;
     margin-right: 10px;
-}
-
-.box_lang {
     text-align: center;
+}
+.box_name {
+    margin-top: 10px;
+}
+.profile_name,
+.profile_subname {
+    text-align: center;
+    margin: 0;
+}
+.profile_name {
+    font-size: 18px;
+    line-height: 18px;
+    /*font-family: Black han sans;*/
+    /*font-family: 'Hanna', sans-serif;*/
+    /*font-family: 'KoPub Batang', serif;*/
+}
+.profile_subname {
+    font-size: .9em;
+    line-height: 0.9em;
 }
 
 nav ul {
@@ -118,13 +139,8 @@ nav .active {
 .imgS {
     max-width: 80px;
 }
-.mainTitle {
-    text-align: center;
-}
-.subTitle {
-    font-size: .9em;
-    text-align: center;
-}
+
+
 .tag {
     font-size: .8em;
     padding: 0 5px 0 5px;
