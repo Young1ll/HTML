@@ -6,8 +6,16 @@ const store = (set) => ({
   isLoggedIn: false,
   boards: [],
   areBoardFetched: false,
+  toastrMsg: "",
+  setToastr: (toastrMsg) => set({ toastrMsg }, false, "setToastr"),
   setBoards: (boards) =>
     set({ boards, areBoardFetched: true }, false, "setBoards"),
+  addBoard: (board) =>
+    set(
+      (old) => ({ ...old, boards: [board, ...old.boards] }), // 기본 최신순...
+      false,
+      "addBoard"
+    ),
   setLoginState: (status) =>
     set(
       {

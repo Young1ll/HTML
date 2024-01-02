@@ -10,7 +10,7 @@ import useStore from "../../store";
 
 const BoardScreen = () => {
   const { fetchBoards } = useApp();
-  const { areBoardsFetched } = useStore();
+  const { boards, areBoardsFetched } = useStore();
   const [loading, setLoading] = useState(true); // default: true
   const [showModal, setShowModal] = useState(false);
 
@@ -29,13 +29,9 @@ const BoardScreen = () => {
 
       <Stack mt={5} px={3}>
         <Grid container spacing={4}>
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
+          {boards.map((board) => (
+            <BoardCard key={board.id} {...board} />
+          ))}
         </Grid>
       </Stack>
     </>

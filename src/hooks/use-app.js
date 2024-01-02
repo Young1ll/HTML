@@ -2,6 +2,8 @@ import {
   addDoc,
   collection,
   getDocs,
+  orderBy,
+  query,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -9,7 +11,7 @@ import { getAuth } from "firebase/auth";
 import useStore from "../store";
 
 const useApp = () => {
-  const { setBoards } = useStore();
+  const { addBoard, setBoards } = useStore();
   const {
     currentUser: { uid },
   } = getAuth();
@@ -21,7 +23,12 @@ const useApp = () => {
       await addDoc(boardCollRef, {
         name,
         color,
-        createAt: serverTimestamp(),
+        createdAt: serverTimestamp(), //<-- serverTimestamp 알아보기: https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
+      });
+      addBoard({
+        name,
+        color,
+        createdAt: new Date().toLocaleDateString("en-US"),
       });
     } catch (err) {
       //TODO: toast
@@ -32,10 +39,12 @@ const useApp = () => {
 
   const fetchBoards = async (setLoading) => {
     try {
-      const querySnapshop = await getDocs(boardCollRef);
+      const q = query(boardCollRef, orderBy("createdAt", "desc"));
+      const querySnapshop = await getDocs(q);
       const boards = querySnapshop.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
+        createdAt: doc.data().createdAt.toDate().toLocaleDateString("en-US"),
       }));
 
       setBoards(boards);

@@ -1,14 +1,15 @@
 import { Launch } from "@mui/icons-material";
 import { Box, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { colors } from "../../theme";
 
-const BoardCard = () => {
+const BoardCard = ({ name, color, createdAt }) => {
   return (
     <Grid item xs={3}>
       <Stack
         p={2}
         bgcolor={"background.paper"}
         borderLeft={"5px solid"}
-        borderColor={"white"}
+        borderColor={colors[color]}
       >
         <Stack
           direction={"row"}
@@ -23,7 +24,7 @@ const BoardCard = () => {
               overflow={"hidden"}
               textOverflow={"ellipsis"}
             >
-              Board Name
+              {name}
             </Typography>
           </Box>
 
@@ -31,7 +32,7 @@ const BoardCard = () => {
             <Launch />
           </IconButton>
         </Stack>
-        <Typography>created at: </Typography>
+        <Typography>Created at: {createdAt}</Typography>
       </Stack>
     </Grid>
   );
