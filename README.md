@@ -1,6 +1,7 @@
 # minimum-kanban
 
 > [!INFO]
+>
 > _"minimum"은 `young1ll/` 경로 내 연습, 포트폴리오 등의 목적으로 빠르고 작게 구성한 레포지토리들의 Prefix입니다._
 
 ## Table of Contents
