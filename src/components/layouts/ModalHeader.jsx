@@ -9,7 +9,7 @@ const ModalHeader = ({ title, onClose }) => {
       alignItems={"center"}
     >
       <Typography variant="h6">{title}</Typography>
-      <IconButton size="small" onClick={onClose}>
+      <IconButton onClick={onClose}>
         <Close />
       </IconButton>
     </Stack>

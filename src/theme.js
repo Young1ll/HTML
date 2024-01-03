@@ -22,6 +22,11 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiIconButton: {
+      defaultProps: {
+        size: "small",
+      },
+    },
     MuiSnackbar: {
       defaultProps: {
         anchorOrigin: {

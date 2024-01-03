@@ -24,6 +24,7 @@ const App = () => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setLoginState(!!user); // type conversion
     });
+
     return () => unsub();
   }, []);
 
@@ -32,7 +33,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SnackbarManager />
+      <SnackbarManager // toast
+      />
       <BrowserRouter>
         <Routes>
           <Route
