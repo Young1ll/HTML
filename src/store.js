@@ -4,12 +4,12 @@ import { devtools } from "zustand/middleware";
 const store = (set) => ({
   loader: true,
   isLoggedIn: false,
-  boards: [],
-  areBoardFetched: false,
   toastrMsg: "",
+  boards: [],
+  areBoardsFetched: false,
   setToastr: (toastrMsg) => set({ toastrMsg }, false, "setToastr"),
   setBoards: (boards) =>
-    set({ boards, areBoardFetched: true }, false, "setBoards"),
+    set({ boards, areBoardsFetched: true }, false, "setBoards"),
   addBoard: (board) =>
     set(
       (old) => ({ ...old, boards: [board, ...old.boards] }), // 기본 최신순...
@@ -21,8 +21,8 @@ const store = (set) => ({
       {
         isLoggedIn: status,
         loader: false,
-        board: [],
-        areBoardFetched: false,
+        boards: [],
+        areBoardsFetched: false,
       },
       false,
       "setLoginStatus"
