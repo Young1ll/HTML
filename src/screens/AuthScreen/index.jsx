@@ -18,7 +18,7 @@ const initForm = {
 const AuthScreen = () => {
   const { setToastr } = useStore();
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState(initForm);
 
   const authText = isLogin
@@ -50,15 +50,20 @@ const AuthScreen = () => {
   return (
     <Container sx={{ mt: 10 }} maxWidth="xs">
       <Stack spacing={6} alignItems="center" textAlign="center">
-        <Stack direction={"row"}>
+        <Stack direction={"row"} spacing={1}>
           <ImageEl
-            sx={{ mt: 10, height: 40 }}
+            sx={{ height: 40 }}
+            alignItems={"center"}
             src={LogoImg}
             alt="minimum Kanban"
           />
 
-          <Typography color={"rgba(255, 255, 255, 0.6)"}>
-            minimum Kanban
+          <Typography
+            fontSize={"2rem"}
+            lineHeight={1}
+            color={"rgba(255, 255, 255, 0.6)"}
+          >
+            minimumKanban
           </Typography>
         </Stack>
 

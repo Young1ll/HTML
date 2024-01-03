@@ -9,6 +9,7 @@ import AppLoader from "./components/layouts/AppLoader";
 
 // screens
 import AuthScreen from "./screens/AuthScreen";
+import BoardsScreen from "./screens/BoardsScreen";
 import BoardScreen from "./screens/BoardScreen";
 
 import PublicOnlyRoute from "./components/utils/PublicOnlyRoute";
@@ -40,6 +41,10 @@ const App = () => {
           />
           <Route
             path="/boards"
+            element={<PrivateRoute Component={BoardsScreen} />}
+          />
+          <Route
+            path="/boards/:boardId"
             element={<PrivateRoute Component={BoardScreen} />}
           />
         </Routes>
