@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 
 const AddTaskModal = ({ tabName, onClose, addTask, loading }) => {
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState();
 
   return (

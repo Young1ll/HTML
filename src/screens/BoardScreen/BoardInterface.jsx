@@ -4,6 +4,7 @@ import AddTaskModal from "./AddTaskModal";
 import { useCallback, useState } from "react";
 import useApp from "../../hooks/use-app";
 import useStore from "../../store";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const statusMap = {
   todos: "Todos",
@@ -24,24 +25,28 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
     setAddTaskTo(status);
   }, []);
 
-  const handleDeleteTask = useCallback(async (tab, taskId) => {
-    const clonedTabs = structuredClone(tabs); // make sure to clone
-    const taskIndex = clonedTabs[tab].findIndex((task) => task.id === taskId);
+  // TODO: Add error handling, Check twice when deleting
+  const handleDeleteTask = useCallback(
+    async (tab, taskId) => {
+      const clonedTabs = structuredClone(tabs); // make sure to clone
+      const taskIndex = clonedTabs[tab].findIndex((task) => task.id === taskId);
 
-    if (taskIndex === -1) return;
-    clonedTabs[tab].splice(taskIndex, 1);
-    try {
-      setLoading(true);
-      await sleep(100); // sleep for .1 second
-      await updateBoardData(boardId, clonedTabs);
-      setTabs(clonedTabs); // re-render
-      updateLastUpdated();
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      if (taskIndex === -1) return;
+      clonedTabs[tab].splice(taskIndex, 1);
+      try {
+        setLoading(true);
+        await sleep(100); // sleep for .1 second
+        await updateBoardData(boardId, clonedTabs);
+        setTabs(clonedTabs); // re-render
+        updateLastUpdated();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [tabs] // re-render when tabs change(삭제에 대해 즉각 반응)
+  );
 
   const handleAddTask = async (title, description) => {
     if (!title.trim()) return setToastr("Task title cannot be empty!"); // prevent empty task title
@@ -69,6 +74,38 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
     }
   };
 
+  const handleDragEnd = async ({ source, destination }) => {
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+
+    const clonedTabs = structuredClone(tabs);
+    const [draggedTask] = clonedTabs[source.droppableId].splice(
+      source.index,
+      1
+    );
+
+    clonedTabs[destination.droppableId].splice(
+      destination.index,
+      0,
+      draggedTask
+    );
+
+    try {
+      setLoading(true);
+      await updateBoardData(boardId, clonedTabs);
+      setTabs(clonedTabs);
+      updateLastUpdated();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       {!!addTaskTo && (
@@ -79,18 +116,21 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
           loading={loading}
         />
       )}
-      <Grid container mt={2} px={4} spacing={2}>
-        {Object.keys(statusMap).map((status) => (
-          <BoardTab
-            key={status}
-            tasks={tabs[status]}
-            status={status}
-            name={statusMap[status]}
-            openAddTask={handleOpenAddTask}
-            deleteTask={handleDeleteTask}
-          />
-        ))}
-      </Grid>
+
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Grid container mt={2} px={4} spacing={2}>
+          {Object.keys(statusMap).map((status) => (
+            <BoardTab
+              key={status}
+              tasks={tabs[status]}
+              status={status}
+              name={statusMap[status]}
+              openAddTask={handleOpenAddTask}
+              deleteTask={handleDeleteTask}
+            />
+          ))}
+        </Grid>
+      </DragDropContext>
     </>
   );
 };
