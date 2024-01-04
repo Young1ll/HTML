@@ -1,8 +1,9 @@
 import { AddCircleOutline } from "@mui/icons-material";
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import Task from "./Task";
+import { memo } from "react";
 
-const BoardTab = ({ name, addTask, tasks }) => {
+const BoardTab = ({ name, status, openAddTask, tasks }) => {
   return (
     <Grid item xs={4}>
       <Stack p={3} bgcolor={"background.paper"}>
@@ -14,7 +15,7 @@ const BoardTab = ({ name, addTask, tasks }) => {
           <Typography variant="h6" fontWeight={400}>
             {name}
           </Typography>
-          <IconButton onClick={addTask}>
+          <IconButton onClick={() => openAddTask(status)}>
             <AddCircleOutline fontSize="small" />
           </IconButton>
         </Stack>
@@ -34,4 +35,4 @@ const BoardTab = ({ name, addTask, tasks }) => {
   );
 };
 
-export default BoardTab;
+export default memo(BoardTab);

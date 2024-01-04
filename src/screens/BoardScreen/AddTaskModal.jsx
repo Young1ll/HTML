@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const AddTaskModal = ({ tabName, onClose, addTask }) => {
+const AddTaskModal = ({ tabName, onClose, addTask, loading }) => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
 
@@ -57,6 +57,7 @@ const AddTaskModal = ({ tabName, onClose, addTask }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <Button
+            disabled={loading}
             variant="contained"
             onClick={() => addTask(title, description)}
           >

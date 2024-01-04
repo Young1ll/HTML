@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import BoardTab from "./BoardTab";
 import AddTaskModal from "./AddTaskModal";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useApp from "../../hooks/use-app";
 
 const statusMap = {
@@ -10,10 +10,17 @@ const statusMap = {
   completed: "Completed",
 };
 
+const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   const { updateBoardData } = useApp();
+  const [loading, setLoading] = useState(false);
   const [addTaskTo, setAddTaskTo] = useState("");
   const [tabs, setTabs] = useState(structuredClone(boardData)); // Deep Copy boardData
+
+  const handleOpenAddTask = useCallback((status) => {
+    setAddTaskTo(status);
+  }, []);
 
   const handleAddTask = async (title, description) => {
     const clonedTabs = structuredClone(tabs); // make sure to clone
@@ -26,12 +33,16 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
     });
 
     try {
+      setLoading(true);
+      await sleep(); // sleep for 1 second
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs); // re-render
       setAddTaskTo(""); // Add task modal close
       updateLastUpdated();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,6 +53,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
           tabName={statusMap[addTaskTo]}
           onClose={() => setAddTaskTo("")}
           addTask={handleAddTask}
+          loading={loading}
         />
       )}
       <Grid container mt={2} px={4} spacing={2}>
@@ -49,8 +61,9 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
           <BoardTab
             key={status}
             tasks={tabs[status]}
+            status={status}
             name={statusMap[status]}
-            addTask={() => setAddTaskTo(status)}
+            openAddTask={handleOpenAddTask}
           />
         ))}
       </Grid>
