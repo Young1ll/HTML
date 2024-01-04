@@ -3,7 +3,7 @@ import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import Task from "./Task";
 import { memo } from "react";
 
-const BoardTab = ({ name, status, openAddTask, tasks }) => {
+const BoardTab = ({ name, status, openAddTask, deleteTask, tasks }) => {
   return (
     <Grid item xs={4}>
       <Stack p={3} bgcolor={"background.paper"}>
@@ -27,6 +27,7 @@ const BoardTab = ({ name, status, openAddTask, tasks }) => {
               id={task.id}
               title={task.title}
               description={task.description}
+              deleteTask={() => deleteTask(status, task.id)}
             />
           ))}
         </Stack>

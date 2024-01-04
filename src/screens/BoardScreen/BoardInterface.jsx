@@ -3,6 +3,7 @@ import BoardTab from "./BoardTab";
 import AddTaskModal from "./AddTaskModal";
 import { useCallback, useState } from "react";
 import useApp from "../../hooks/use-app";
+import useStore from "../../store";
 
 const statusMap = {
   todos: "Todos",
@@ -14,6 +15,7 @@ const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   const { updateBoardData } = useApp();
+  const { setToastr } = useStore();
   const [loading, setLoading] = useState(false);
   const [addTaskTo, setAddTaskTo] = useState("");
   const [tabs, setTabs] = useState(structuredClone(boardData)); // Deep Copy boardData
@@ -22,13 +24,34 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
     setAddTaskTo(status);
   }, []);
 
+  const handleDeleteTask = useCallback(async (tab, taskId) => {
+    const clonedTabs = structuredClone(tabs); // make sure to clone
+    const taskIndex = clonedTabs[tab].findIndex((task) => task.id === taskId);
+
+    if (taskIndex === -1) return;
+    clonedTabs[tab].splice(taskIndex, 1);
+    try {
+      setLoading(true);
+      await sleep(100); // sleep for .1 second
+      await updateBoardData(boardId, clonedTabs);
+      setTabs(clonedTabs); // re-render
+      updateLastUpdated();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const handleAddTask = async (title, description) => {
+    if (!title.trim()) return setToastr("Task title cannot be empty!"); // prevent empty task title
+
     const clonedTabs = structuredClone(tabs); // make sure to clone
     clonedTabs[addTaskTo].unshift({
       // 앞에 추가
       id: crypto.randomUUID(),
-      title,
-      description,
+      title: title,
+      description: description || "", // description is optional
       createdAt: new Date().toLocaleString("en-US"),
     });
 
@@ -64,6 +87,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
             status={status}
             name={statusMap[status]}
             openAddTask={handleOpenAddTask}
+            deleteTask={handleDeleteTask}
           />
         ))}
       </Grid>

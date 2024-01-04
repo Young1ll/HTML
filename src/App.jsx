@@ -33,8 +33,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SnackbarManager // toast
-      />
+      <SnackbarManager />
       <BrowserRouter>
         <Routes>
           <Route

@@ -6,16 +6,21 @@
 ## Table of Contents
 
 - [About](#about)
+- [Structure](#project-structure)
 - [Features](#features)
 - [References](#references)
 
 ## About <a name = "about"></a>
 
-minimum-kanban은 Vite(react), MUIv5, Firebase, Zustand로 제작된 kanban Web App 입니다. 프로젝트, 일정 등을
+minimum-kanban은 Vite(react), MUIv5, Firebase, Zustand로 제작된 kanban Web App 입니다. 프로젝트, 일정 등을 간편하게 관리할 수 있는 일반적인 Kanban 3-columns flow 방식이며...
+
+## Project Structure <a name = "project-structure"></a>
 
 ## Features <a name = "features"></a>
 
-- 회원가입
+- Firebase Authentication을 사용한 사용자 인증
+- Firestore를 이용한 데이터 저장 및 관리
+- 3 Columns Layout
 - 모바일 및 반응형 화면
 - 다크모드
 - 마크다운, 이미지, 링크 첨부 지원
