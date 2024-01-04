@@ -25,6 +25,9 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
     setAddTaskTo(status);
   }, []);
 
+  // TODO: DRY(refactor: remove repeating update board data code)
+  // const handleUpdateBoardData = async (clonedTabs, toastrMsg) => {};
+
   // TODO: Add error handling, Check twice when deleting
   const handleDeleteTask = useCallback(
     async (tab, taskId) => {
@@ -99,6 +102,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs);
       updateLastUpdated();
+      setToastr("Board updated successfully!");
     } catch (err) {
       console.log(err);
     } finally {

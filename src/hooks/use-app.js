@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -12,8 +13,10 @@ import {
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 import useStore from "../store";
+import { useNavigate } from "react-router-dom";
 
 const useApp = () => {
+  const navigate = useNavigate();
   const { boards, addBoard, setBoards, setToastr } = useStore();
   const {
     currentUser: { uid },
@@ -21,12 +24,28 @@ const useApp = () => {
 
   const boardCollRef = collection(db, `users/${uid}/boards`);
 
+  const deleteBoard = async (boardId) => {
+    const docRef = doc(db, `users/${uid}/boards/${boardId}`);
+    try {
+      await deleteDoc(docRef);
+
+      const tempBoards = boards.filter((board) => board.id !== boardId); // 기존 boards에서 boardId 제외
+      setBoards(tempBoards);
+
+      navigate("/boards");
+    } catch (err) {
+      setToastr("Error deleting board");
+      throw err;
+    }
+  };
+
   const updateBoardData = async (boardId, tabs) => {
     const docRef = doc(db, `users/${uid}/boardsData/${boardId}`);
     try {
       await updateDoc(docRef, { tabs, lastUpdated: serverTimestamp() });
     } catch (err) {
-      console.log(err);
+      setToastr("Error updating board");
+      throw err;
     }
   };
 
@@ -44,7 +63,8 @@ const useApp = () => {
         return doc.data();
       } else return null;
     } catch (err) {
-      console.log(err);
+      setToastr("Error fetching board");
+      throw err;
     }
   };
 
@@ -104,6 +124,7 @@ const useApp = () => {
     fetchBoards,
     createBoard,
     updateBoardData,
+    deleteBoard,
   };
 };
 

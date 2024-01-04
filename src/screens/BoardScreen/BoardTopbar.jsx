@@ -3,7 +3,7 @@ import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../theme";
 
-const BoardTopbar = ({ name, lastUpdated, color }) => {
+const BoardTopbar = ({ name, lastUpdated, color, deleteBoard }) => {
   const navigate = useNavigate();
   return (
     <AppBar
@@ -25,7 +25,7 @@ const BoardTopbar = ({ name, lastUpdated, color }) => {
         <Stack spacing={1} direction="row" alignItems={"center"}>
           <Typography variant="body2">Last updated: {lastUpdated}</Typography>
 
-          <IconButton>
+          <IconButton onClick={deleteBoard}>
             <Delete />
           </IconButton>
         </Stack>
