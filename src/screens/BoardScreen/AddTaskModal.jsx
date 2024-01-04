@@ -1,15 +1,15 @@
-import { Close } from "@mui/icons-material";
+import { useState } from "react";
+import ModalHeader from "../../components/layouts/ModalHeader";
+
 import {
   Button,
   Chip,
   Dialog,
-  IconButton,
   OutlinedInput,
   Stack,
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 
 const AddTaskModal = ({ tabName, onClose, addTask, loading }) => {
   const [title, setTitle] = useState("");
@@ -18,18 +18,7 @@ const AddTaskModal = ({ tabName, onClose, addTask, loading }) => {
   return (
     <Dialog fullWidth maxWidth="xs" open onClose={onClose}>
       <Stack p={2}>
-        <Stack
-          mb={3}
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Typography variant="h6">Add Task</Typography>
-
-          <IconButton onClick={onClose}>
-            <Close />
-          </IconButton>
-        </Stack>
+        <ModalHeader title={"Add Task"} onClose={onClose} />
 
         <Stack spacing={2}>
           <Stack direction={"row"} spacing={1} alignItems={"center"}>

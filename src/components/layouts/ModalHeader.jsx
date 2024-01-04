@@ -4,6 +4,7 @@ import { IconButton, Stack, Typography } from "@mui/material";
 const ModalHeader = ({ title, onClose }) => {
   return (
     <Stack
+      mb={3}
       direction={"row"}
       justifyContent={"space-between"}
       alignItems={"center"}

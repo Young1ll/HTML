@@ -1,8 +1,10 @@
-import { Delete } from "@mui/icons-material";
-import { IconButton, Stack, Typography } from "@mui/material";
+import { Delete, ImportExport } from "@mui/icons-material";
+import { IconButton, Stack, Typography, useMediaQuery } from "@mui/material";
 import { Draggable } from "react-beautiful-dnd";
 
-const Task = ({ id, index, title, description, deleteTask }) => {
+const Task = ({ id, index, title, description, deleteTask, openShiftTask }) => {
+  // https://mui.com/material-ui/react-use-media-query/#using-material-uis-breakpoint-helpers
+  const isXs = useMediaQuery((theme) => theme.breakpoints.only("xs"));
   return (
     <Draggable index={index} draggableId={id}>
       {(provided) => (
@@ -24,9 +26,17 @@ const Task = ({ id, index, title, description, deleteTask }) => {
             {title}
           </Typography>
 
-          <IconButton onClick={deleteTask}>
-            <Delete />
-          </IconButton>
+          <Stack direction={"row"}>
+            {isXs && (
+              <IconButton onClick={openShiftTask}>
+                <ImportExport />
+              </IconButton>
+            )}
+
+            <IconButton onClick={deleteTask}>
+              <Delete />
+            </IconButton>
+          </Stack>
         </Stack>
       )}
     </Draggable>

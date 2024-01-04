@@ -23,7 +23,9 @@ const BoardTopbar = ({ name, lastUpdated, color, deleteBoard }) => {
         </Stack>
 
         <Stack spacing={1} direction="row" alignItems={"center"}>
-          <Typography variant="body2">Last updated: {lastUpdated}</Typography>
+          <Typography display={{ xs: "none", sm: "block" }} variant="body2">
+            Last updated: {lastUpdated}
+          </Typography>
 
           <IconButton onClick={deleteBoard}>
             <Delete />

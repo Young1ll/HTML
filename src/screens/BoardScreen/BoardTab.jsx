@@ -5,11 +5,24 @@ import { memo } from "react";
 // import { Droppable } from "react-beautiful-dnd";
 import Droppable from "../../components/utils/StrictModeDroppable";
 
-const BoardTab = ({ name, status, openAddTask, deleteTask, tasks }) => {
+const BoardTab = ({
+  name,
+  status,
+  openAddTask,
+  openShiftTask,
+  deleteTask,
+  tasks,
+}) => {
   return (
     <Droppable droppableId={status}>
       {(provided) => (
-        <Grid ref={provided.innerRef} {...provided.droppableProps} item xs={4}>
+        <Grid
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          item
+          xs={12}
+          sm={4}
+        >
           <Stack p={3} bgcolor={"background.paper"}>
             <Stack
               direction={"row"}
@@ -33,6 +46,7 @@ const BoardTab = ({ name, status, openAddTask, deleteTask, tasks }) => {
                   title={task.title}
                   description={task.description}
                   deleteTask={() => deleteTask(status, task.id)}
+                  openShiftTask={() => openShiftTask(status, task)}
                 />
               ))}
             </Stack>

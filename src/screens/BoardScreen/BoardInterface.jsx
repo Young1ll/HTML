@@ -5,8 +5,9 @@ import { useCallback, useState } from "react";
 import useApp from "../../hooks/use-app";
 import useStore from "../../store";
 import { DragDropContext } from "react-beautiful-dnd";
+import ShiftTaskModal from "./ShiftTaskModal";
 
-const statusMap = {
+export const statusMap = {
   todos: "Todos",
   inProgress: "In Progress",
   completed: "Completed",
@@ -17,9 +18,45 @@ const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   const { updateBoardData } = useApp();
   const { setToastr } = useStore();
+
   const [loading, setLoading] = useState(false);
   const [addTaskTo, setAddTaskTo] = useState("");
+  const [shiftTask, setShiftTask] = useState(null);
   const [tabs, setTabs] = useState(structuredClone(boardData)); // Deep Copy boardData
+
+  const handleOpenShiftTask = useCallback((status, task) => {
+    console.log({ status, task });
+    setShiftTask({ status, task });
+  }, []);
+
+  const handleShiftTask = async (newStatus) => {
+    const clonedTabs = structuredClone(tabs);
+    const oldStatusValue = shiftTask.status;
+
+    if (oldStatusValue === newStatus) return setShiftTask(null);
+
+    const [task] = clonedTabs[oldStatusValue].splice(
+      clonedTabs[oldStatusValue].findIndex(
+        (task) => task.id === shiftTask.task.id
+      ),
+      1
+    );
+
+    clonedTabs[newStatus].unshift(task);
+
+    try {
+      setLoading(true);
+      await updateBoardData(boardId, clonedTabs);
+      setTabs(clonedTabs); // re-render
+      updateLastUpdated();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+      setToastr("Board updated successfully");
+      setShiftTask(null);
+    }
+  };
 
   const handleOpenAddTask = useCallback((status) => {
     setAddTaskTo(status);
@@ -28,7 +65,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   // TODO: DRY(refactor: remove repeating update board data code)
   // const handleUpdateBoardData = async (clonedTabs, toastrMsg) => {};
 
-  // TODO: Add error handling, Check twice when deleting
+  // TODO: Check twice when deleting
   const handleDeleteTask = useCallback(
     async (tab, taskId) => {
       const clonedTabs = structuredClone(tabs); // make sure to clone
@@ -112,6 +149,13 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
 
   return (
     <>
+      {!!shiftTask && (
+        <ShiftTaskModal
+          task={shiftTask}
+          handleShiftTask={handleShiftTask}
+          onClose={() => setShiftTask(null)}
+        />
+      )}
       {!!addTaskTo && (
         <AddTaskModal
           tabName={statusMap[addTaskTo]}
@@ -130,6 +174,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
               status={status}
               name={statusMap[status]}
               openAddTask={handleOpenAddTask}
+              openShiftTask={handleOpenShiftTask}
               deleteTask={handleDeleteTask}
             />
           ))}

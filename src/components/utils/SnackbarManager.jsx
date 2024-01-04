@@ -7,7 +7,7 @@ const SnackbarManager = () => {
     <Snackbar
       open={!!toastrMsg}
       message={toastrMsg}
-      autoHideDuration={50000}
+      autoHideDuration={5000}
       onClose={() => setToastr("")}
     />
   );

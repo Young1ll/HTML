@@ -7,7 +7,7 @@ const BoardCard = ({ name, color, createdAt, id }) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} sm={3}>
       <Stack
         p={2}
         bgcolor={"background.paper"}

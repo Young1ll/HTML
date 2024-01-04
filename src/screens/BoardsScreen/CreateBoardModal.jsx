@@ -11,19 +11,27 @@ import ModalHeader from "../../components/layouts/ModalHeader";
 
 import { colors } from "../../theme";
 import useApp from "../../hooks/use-app";
+import useStore from "../../store";
 
 const CreateBoardModal = ({ closeModal }) => {
   const { createBoard } = useApp();
+  const { setToastr } = useStore();
   const [name, setName] = useState("");
   const [color, setColor] = useState(0); // index
   const [loading, setLoading] = useState(false);
 
   const handleCreate = async () => {
-    console.log({ name, color });
+    // console.log({ name, color });
+    const trimmedName = name.trim();
+    if (!trimmedName) return setToastr("Board name cannot be empty!");
+    if (!/^[a-zA-Z0-9\s]{1,25}$/.test(trimmedName))
+      return setToastr(
+        "Board name cannot contain special characters and should be 25 characters!"
+      );
 
     try {
       setLoading(true);
-      await createBoard({ name, color });
+      await createBoard({ name: trimmedName, color });
       closeModal();
     } catch (err) {
       setLoading(false);
@@ -36,7 +44,7 @@ const CreateBoardModal = ({ closeModal }) => {
       <Stack p={2}>
         <ModalHeader title={"Create Board"} onClose={closeModal} />
 
-        <Stack my={5} spacing={2}>
+        <Stack mb={5} spacing={2}>
           <TextField
             label="Board Name"
             value={name}
