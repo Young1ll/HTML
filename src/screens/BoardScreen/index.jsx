@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useApp from "../../hooks/use-app";
 import useStore from "../../store";
@@ -17,8 +17,12 @@ const BoardScreen = () => {
   const [lastUpdated, setLastUpdated] = useState(null);
   const { fetchBoard } = useApp();
   const board = useMemo(() => boards.find((b) => b.id === boardId), []); // prevent re-render
+  const boardData = useMemo(() => data, [data]);
 
-  console.log({ loading, data, lastUpdated });
+  const handleLastUpdated = useCallback(
+    () => setLastUpdated(new Date().toLocaleString("en-US")),
+    []
+  );
 
   const handleFetchBoard = async () => {
     try {
@@ -49,7 +53,11 @@ const BoardScreen = () => {
         lastUpdated={lastUpdated}
         color={board?.color}
       />
-      <BoardInterface />
+      <BoardInterface
+        boardData={boardData}
+        boardId={boardId}
+        updateLastUpdated={handleLastUpdated}
+      />
     </>
   );
 };

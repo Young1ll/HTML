@@ -1,6 +1,7 @@
 import { ArrowBack, Delete } from "@mui/icons-material";
 import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../theme";
 
 const BoardTopbar = ({ name, lastUpdated, color }) => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const BoardTopbar = ({ name, lastUpdated, color }) => {
       position="static"
       sx={{
         borderBottom: "5px solid",
-        borderColor: color,
+        borderColor: colors[color],
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>

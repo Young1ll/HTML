@@ -7,6 +7,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
@@ -19,6 +20,15 @@ const useApp = () => {
   } = getAuth();
 
   const boardCollRef = collection(db, `users/${uid}/boards`);
+
+  const updateBoardData = async (boardId, tabs) => {
+    const docRef = doc(db, `users/${uid}/boardsData/${boardId}`);
+    try {
+      await updateDoc(docRef, { tabs, lastUpdated: serverTimestamp() });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   /**
    * Fetches the board data for a given board ID.
@@ -93,6 +103,7 @@ const useApp = () => {
     fetchBoard,
     fetchBoards,
     createBoard,
+    updateBoardData,
   };
 };
 

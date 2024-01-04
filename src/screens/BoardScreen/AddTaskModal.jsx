@@ -6,12 +6,17 @@ import {
   IconButton,
   OutlinedInput,
   Stack,
+  TextareaAutosize,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
-const AddTaskModal = ({ tabName, onClose }) => {
+const AddTaskModal = ({ tabName, onClose, addTask }) => {
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+
   return (
-    <Dialog fullWidth maxWidth="xs" open onClick={onClose}>
+    <Dialog fullWidth maxWidth="xs" open onClose={onClose}>
       <Stack p={2}>
         <Stack
           mb={3}
@@ -32,8 +37,31 @@ const AddTaskModal = ({ tabName, onClose }) => {
             <Chip size="small" label={tabName} />
           </Stack>
 
-          <OutlinedInput placeholder="Task" />
-          <Button variant="contained">Add Task</Button>
+          <OutlinedInput
+            placeholder="Task"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <TextareaAutosize
+            placeholder="Description"
+            minRows={3}
+            style={{
+              fontFamily: "inherit",
+              fontSize: "1rem",
+              fontWeight: 400,
+              color: "inherit",
+              backgroundColor: "inherit",
+              padding: "0.5rem",
+            }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            onClick={() => addTask(title, description)}
+          >
+            Add Task
+          </Button>
         </Stack>
       </Stack>
     </Dialog>
