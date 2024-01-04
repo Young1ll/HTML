@@ -20,8 +20,8 @@ minimum-kanban은 Vite(react), MUIv5, Firebase, Zustand로 제작된 kanban Web 
 
 - Firebase Authentication을 사용한 사용자 인증
 - Firestore를 이용한 데이터 저장 및 관리
-- 3 Columns Layout
-- 모바일 및 반응형 화면
+- 3 Columns Layout + Backlog
+- Drag and Drop Tasks
 - 다크모드
 - 마크다운, 이미지, 링크 첨부 지원
 - 공유 및 PDF 내보내기
