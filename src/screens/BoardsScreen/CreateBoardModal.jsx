@@ -23,10 +23,12 @@ const CreateBoardModal = ({ closeModal }) => {
   const handleCreate = async () => {
     // console.log({ name, color });
     const trimmedName = name.trim();
-    if (!trimmedName) return setToastr("Board name cannot be empty!");
-    if (!/^[a-zA-Z0-9\s]{1,25}$/.test(trimmedName))
+    if (!trimmedName)
+      return setToastr("Board name cannot be empty!", "warning");
+    if (!/^[a-zA-Z0-9ㄱ-힣\s]{1,25}$/.test(trimmedName))
       return setToastr(
-        "Board name cannot contain special characters and should be 25 characters!"
+        "Board name cannot contain special characters and should be 25 characters!",
+        "warning"
       );
 
     try {

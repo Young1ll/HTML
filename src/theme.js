@@ -54,6 +54,8 @@ const theme = createTheme({
       fontWeight: 700,
     },
     h6: {
+      fontSize: "1.15rem",
+      lineHeight: "1.15rem",
       fontWeight: 700,
     },
   },

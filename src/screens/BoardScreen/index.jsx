@@ -7,6 +7,7 @@ import BoardTopbar from "./BoardTopbar";
 import BoardInterface from "./BoardInterface";
 import AppLoader from "../../components/layouts/AppLoader";
 import BoardNotReady from "./BoardNotReady";
+import GlobalTopbar from "../../components/layouts/GlobalTopbar";
 
 const BoardScreen = () => {
   const navigate = useNavigate();
@@ -60,12 +61,16 @@ const BoardScreen = () => {
   if (!data) return <BoardNotReady />;
   return (
     <>
+      <GlobalTopbar />
       <BoardTopbar
         name={board?.name}
         lastUpdated={lastUpdated}
         color={board?.color}
         deleteBoard={handleDeleteBoard}
       />
+
+      {/* TODO: openEditModal 대응 */}
+
       <BoardInterface
         boardData={boardData}
         boardId={boardId}

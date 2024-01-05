@@ -23,7 +23,7 @@ const BoardTab = ({
           xs={12}
           sm={4}
         >
-          <Stack p={3} bgcolor={"background.paper"}>
+          <Stack px={2} py={1.5} bgcolor={"background.paper"}>
             <Stack
               direction={"row"}
               justifyContent={"space-between"}

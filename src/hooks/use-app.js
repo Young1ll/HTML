@@ -34,7 +34,7 @@ const useApp = () => {
 
       navigate("/boards");
     } catch (err) {
-      setToastr("Error deleting board");
+      setToastr("Error deleting board", "error");
       throw err;
     }
   };
@@ -44,7 +44,7 @@ const useApp = () => {
     try {
       await updateDoc(docRef, { tabs, lastUpdated: serverTimestamp() });
     } catch (err) {
-      setToastr("Error updating board");
+      setToastr("Error updating board", "error");
       throw err;
     }
   };
@@ -63,7 +63,7 @@ const useApp = () => {
         return doc.data();
       } else return null;
     } catch (err) {
-      setToastr("Error fetching board");
+      setToastr("Error fetching board", "error");
       throw err;
     }
   };
@@ -90,7 +90,7 @@ const useApp = () => {
         id: doc.id,
       });
     } catch (err) {
-      setToastr("Error creating board");
+      setToastr("Error creating board", "error");
       throw err;
     }
   };
@@ -113,7 +113,7 @@ const useApp = () => {
 
       setBoards(boards);
     } catch (err) {
-      setToastr("Error fetching boards");
+      setToastr("Error fetching boards", "error");
     } finally {
       if (setLoading) setLoading(false);
     }

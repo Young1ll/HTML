@@ -7,7 +7,7 @@ const BoardCard = ({ name, color, createdAt, id }) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item xs={12} sm={3}>
+    <Grid item xs={12} sm={6} md={4} lg={3}>
       <Stack
         p={2}
         bgcolor={"background.paper"}
@@ -32,10 +32,10 @@ const BoardCard = ({ name, color, createdAt, id }) => {
           </Box>
 
           <IconButton onClick={() => navigate(`/boards/${id}`)}>
-            <Launch />
+            <Launch fontSize="small" />
           </IconButton>
         </Stack>
-        <Typography>Created at: {createdAt}</Typography>
+        <Typography fontSize={14}>Created at: {createdAt}</Typography>
       </Stack>
     </Grid>
   );

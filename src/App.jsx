@@ -15,10 +15,9 @@ import PublicOnlyRoute from "./components/utils/PublicOnlyRoute";
 import PrivateRoute from "./components/utils/PrivateRoute";
 
 import SnackbarManager from "./components/utils/SnackbarManager";
-import DiscoverScreen from "./screens/DiscoverScreen";
 import UserScreen from "./screens/UserScreen";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
+import AuthScreen from "./screens/AuthScreen";
+import ExploreScreen from "./screens/ExploreScreen";
 
 const App = () => {
   const { loader, setLoginState } = useStore();
@@ -41,11 +40,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<PublicOnlyRoute Component={LoginScreen} />}
-          />
-          <Route
-            path="/register"
-            element={<PublicOnlyRoute Component={RegisterScreen} />}
+            element={<PublicOnlyRoute Component={AuthScreen} />}
           />
           <Route
             path="/user/:userId"
@@ -60,8 +55,8 @@ const App = () => {
             element={<PrivateRoute Component={BoardScreen} />}
           />
           <Route
-            path="/discover"
-            element={<PrivateRoute Component={DiscoverScreen} />}
+            path="/explore"
+            element={<PrivateRoute Component={ExploreScreen} />}
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

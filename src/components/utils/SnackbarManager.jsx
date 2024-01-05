@@ -1,15 +1,17 @@
-import { Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import useStore from "../../store";
 
 const SnackbarManager = () => {
-  const { toastrMsg, setToastr } = useStore();
+  const { toastrMsg, toastrServerity, setToastr } = useStore();
+
   return (
     <Snackbar
       open={!!toastrMsg}
-      message={toastrMsg}
-      autoHideDuration={5000}
-      onClose={() => setToastr("")}
-    />
+      autoHideDuration={3000}
+      onClose={() => setToastr("", toastrServerity)}
+    >
+      <Alert severity={toastrServerity}>{toastrMsg}</Alert>
+    </Snackbar>
   );
 };
 

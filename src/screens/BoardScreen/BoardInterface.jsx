@@ -53,7 +53,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       console.log(err);
     } finally {
       setLoading(false);
-      setToastr("Board updated successfully");
+      setToastr("Board updated successfully", "success");
       setShiftTask(null);
     }
   };
@@ -89,7 +89,8 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   );
 
   const handleAddTask = async (title, description) => {
-    if (!title.trim()) return setToastr("Task title cannot be empty!"); // prevent empty task title
+    if (!title.trim())
+      return setToastr("Task title cannot be empty!", "warning"); // prevent empty task title
 
     const clonedTabs = structuredClone(tabs); // make sure to clone
     clonedTabs[addTaskTo].unshift({
@@ -139,7 +140,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs);
       updateLastUpdated();
-      setToastr("Board updated successfully!");
+      setToastr("Board updated successfully!", "success");
     } catch (err) {
       console.log(err);
     } finally {

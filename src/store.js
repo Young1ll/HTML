@@ -4,10 +4,12 @@ import { devtools } from "zustand/middleware";
 const store = (set) => ({
   loader: true,
   isLoggedIn: false,
-  toastrMsg: "",
   boards: [],
   areBoardsFetched: false,
-  setToastr: (toastrMsg) => set({ toastrMsg }, false, "setToastr"),
+  toastrMsg: "",
+  toastrServerity: "",
+  setToastr: (toastrMsg, toastrServerity) =>
+    set({ toastrMsg, toastrServerity }, false, "setToastr"),
   setBoards: (boards) =>
     set({ boards, areBoardsFetched: true }, false, "setBoards"),
   addBoard: (board) =>

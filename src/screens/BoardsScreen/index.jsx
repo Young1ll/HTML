@@ -7,7 +7,7 @@ import AppLoader from "../../components/layouts/AppLoader";
 import CreateBoardModal from "./CreateBoardModal";
 import BoardCard from "./BoardCard";
 import NoBoards from "./NoBoards";
-import Topbar from "./Topbar";
+import GlobalTopbar from "../../components/layouts/GlobalTopbar";
 
 const BoardsScreen = () => {
   const { fetchBoards } = useApp();
@@ -23,9 +23,8 @@ const BoardsScreen = () => {
   if (loading) return <AppLoader />;
   return (
     <>
-      <Topbar openModal={() => setShowModal(true)} />
+      <GlobalTopbar openModal={() => setShowModal(true)} />
       {showModal && <CreateBoardModal closeModal={() => setShowModal(false)} />}
-
       {!boards.length ? (
         <NoBoards />
       ) : (
