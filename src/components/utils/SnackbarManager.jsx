@@ -30,7 +30,9 @@ const SnackbarManager = () => {
 
   return (
     <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-      <Alert severity={toastrSeverity}>{toastrMsg}</Alert>
+      <Alert elevation={6} severity={toastrSeverity}>
+        {toastrMsg}
+      </Alert>
     </Snackbar>
   );
 };
