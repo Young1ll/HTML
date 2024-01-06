@@ -1,16 +1,36 @@
 import { Alert, Snackbar } from "@mui/material";
 import useStore from "../../store";
+import { useEffect, useState } from "react";
 
 const SnackbarManager = () => {
-  const { toastrMsg, toastrServerity, setToastr } = useStore();
+  const { toastrMsg, toastrSeverity, setToastr } = useStore();
+  const [open, setOpen] = useState(false); // 스낵바의 open 상태를 관리합니다.
+
+  useEffect(() => {
+    if (toastrMsg) {
+      setOpen(true);
+    }
+  }, [toastrMsg]);
+
+  useEffect(() => {
+    if (!open) {
+      setTimeout(() => {
+        setToastr("", "info");
+      }, 1000);
+    }
+  }, [open]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
-    <Snackbar
-      open={!!toastrMsg}
-      autoHideDuration={3000}
-      onClose={() => setToastr("", toastrServerity)}
-    >
-      <Alert severity={toastrServerity}>{toastrMsg}</Alert>
+    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Alert severity={toastrSeverity}>{toastrMsg}</Alert>
     </Snackbar>
   );
 };
