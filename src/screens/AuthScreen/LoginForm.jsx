@@ -1,9 +1,20 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { useState } from "react";
+import useKeypress from "../../hooks/use-keypress";
 
 const LoginForm = ({ loading, loginForm, handleLoginChange, handleAuth }) => {
   const [visibility, setVisibility] = useState(false);
+
+  const submitOk =
+    loading || !loginForm.email.trim() || !loginForm.password.trim();
+
+  const handleEnter = () => {
+    if (!submitOk) handleAuth();
+  };
+
+  useKeypress("Enter", handleEnter);
+
   return (
     <Stack spacing={2} width={"100%"}>
       <Stack spacing={1}>
@@ -36,9 +47,7 @@ const LoginForm = ({ loading, loginForm, handleLoginChange, handleAuth }) => {
       <Button
         size="large"
         variant="contained"
-        disabled={
-          loading || !loginForm.email.trim() || !loginForm.password.trim()
-        }
+        disabled={submitOk}
         onClick={handleAuth}
       >
         Login

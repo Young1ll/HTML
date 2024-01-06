@@ -7,9 +7,9 @@ const store = (set) => ({
   boards: [],
   areBoardsFetched: false,
   toastrMsg: "",
-  toastrServerity: "",
-  setToastr: (toastrMsg, toastrServerity) =>
-    set({ toastrMsg, toastrServerity }, false, "setToastr"),
+  toastrSeverity: "info", // info, success, warning, error
+  setToastr: (toastrMsg, toastrSeverity) =>
+    set({ toastrMsg, toastrSeverity }, false, "setToastr"),
   setBoards: (boards) =>
     set({ boards, areBoardsFetched: true }, false, "setBoards"),
   addBoard: (board) =>

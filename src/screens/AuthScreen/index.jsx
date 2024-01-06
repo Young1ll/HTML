@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import { Container, Stack, Typography, Box, Link } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import {
+  Container,
+  Stack,
+  Typography,
+  Box,
+  Link,
+  Button,
+  useTheme,
+  IconButton,
+} from "@mui/material";
 import LogoImg from "../../assets/logo.svg";
 import ImageEl from "../../components/utils/ImageEl";
 
@@ -13,6 +22,9 @@ import useStore from "../../store";
 import AppLoader from "../../components/layouts/AppLoader";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import { ThemeContext } from "../../theme";
+import { DarkMode, LightMode } from "@mui/icons-material";
+// import { useThemeContext } from "../../theme/theme-context";
 
 const initLoginForm = {
   email: "",
@@ -25,6 +37,9 @@ const initRegisterForm = {
 };
 
 const LoginScreen = () => {
+  const theme = useTheme();
+  const { themeMode, setThemeMode } = useContext(ThemeContext);
+  // const { mode, toggleThemeMode } = useThemeContext();
   const { setToastr } = useStore();
   const [isLogin, setIsLogin] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
@@ -83,15 +98,20 @@ const LoginScreen = () => {
   }, []);
 
   const authText = isLogin ? (
-    <>
-      Ready to explore more?{" "}
-      <Link onClick={() => setIsLogin(false)}>Join us</Link> as a member!
-    </>
+    <Stack mt={2} justifyContent={"center"} alignItems={"center"}>
+      <Typography>
+        Ready to explore more?{" "}
+        <Link onClick={() => setIsLogin(false)}>Join us</Link> as a member!
+      </Typography>
+      <Link>Forgot Password?</Link>
+    </Stack>
   ) : (
-    <>
-      Already have an account?{" "}
-      <Link onClick={() => setIsLogin(true)}>Log In</Link>
-    </>
+    <Box mt={2} display={"flex"} justifyContent={"center"}>
+      <Typography>
+        Already have an account?{" "}
+        <Link onClick={() => setIsLogin(true)}>Log In</Link>
+      </Typography>
+    </Box>
   );
 
   if (pageLoading) return <AppLoader />;
@@ -105,6 +125,14 @@ const LoginScreen = () => {
       }}
       maxWidth="xs"
     >
+      <Box position={"absolute"} top={15} right={25}>
+        <IconButton
+          onClick={() => setThemeMode(themeMode === "dark" ? "light" : "dark")}
+        >
+          {themeMode === "dark" ? <DarkMode /> : <LightMode />}
+        </IconButton>
+      </Box>
+
       <Stack spacing={6} alignItems="center" textAlign="center">
         <Stack direction={"row"} spacing={1}>
           <ImageEl
@@ -114,16 +142,12 @@ const LoginScreen = () => {
             alt="minimum Kanban"
           />
 
-          <Typography
-            fontSize={"2rem"}
-            lineHeight={1}
-            color={"rgba(255, 255, 255, 0.6)"}
-          >
+          <Typography fontSize={"2rem"} lineHeight={1}>
             minimumKanban
           </Typography>
         </Stack>
 
-        <Typography color={"rgba(255, 255, 255, 0.6)"}>
+        <Typography>
           Visualize your Workflow for Increased Productivity. Access Your Tasks
           Anytime, Anywhere.
         </Typography>
@@ -144,15 +168,8 @@ const LoginScreen = () => {
           />
         )}
       </Stack>
-      <Box mt={2} display={"flex"} justifyContent={"center"}>
-        <Typography
-          sx={{ cursor: "pointer" }}
-          display={"inline"}
-          align="center"
-        >
-          {authText}
-        </Typography>
-      </Box>
+
+      {authText}
 
       <Stack
         flexGrow={1}

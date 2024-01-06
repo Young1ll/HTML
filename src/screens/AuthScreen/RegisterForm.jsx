@@ -1,6 +1,7 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { useState } from "react";
+import useKeypress from "../../hooks/use-keypress";
 
 const RegisterForm = ({
   loading,
@@ -9,6 +10,15 @@ const RegisterForm = ({
   handleAuth,
 }) => {
   const [visibility, setVisibility] = useState(false);
+
+  const submitOk =
+    loading || !registerForm.email.trim() || !registerForm.password.trim();
+
+  const handleEnter = () => {
+    if (!submitOk) handleAuth();
+  };
+
+  useKeypress("Enter", handleEnter);
 
   return (
     <Stack spacing={2} width={"100%"}>
@@ -48,9 +58,7 @@ const RegisterForm = ({
       <Button
         size="large"
         variant="contained"
-        disabled={
-          loading || !registerForm.email.trim() || !registerForm.password.trim()
-        }
+        disabled={submitOk}
         onClick={handleAuth}
       >
         Register
