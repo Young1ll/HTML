@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
   Dialog,
+  IconButton,
   Stack,
   TextField,
   Typography,
@@ -12,6 +13,8 @@ import ModalHeader from "../../components/layouts/ModalHeader";
 import { colors } from "../../theme";
 import useApp from "../../hooks/use-app";
 import useStore from "../../store";
+import useKeypress from "../../hooks/use-keypress";
+import { GridView } from "@mui/icons-material";
 
 const CreateBoardModal = ({ closeModal }) => {
   const { createBoard } = useApp();
@@ -19,6 +22,7 @@ const CreateBoardModal = ({ closeModal }) => {
   const [name, setName] = useState("");
   const [color, setColor] = useState(0); // index
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef(); // for programatically autoFocus
 
   const handleCreate = async () => {
     // console.log({ name, color });
@@ -41,17 +45,37 @@ const CreateBoardModal = ({ closeModal }) => {
     }
   };
 
+  useKeypress("Escape", closeModal);
+  useKeypress("Enter", handleCreate);
+
+  // autoFocus: MUI autoFocus가 작동하지 않아 수동으로 설정
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <Dialog fullWidth maxWidth="xs" open onClose={closeModal}>
       <Stack p={2}>
         <ModalHeader title={"Create Board"} onClose={closeModal} />
 
         <Stack mb={5} spacing={2}>
-          <TextField
-            label="Board Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <Stack direction={"row"} spacing={1} alignItems={"center"}>
+            <IconButton sx={{ borderRadius: ".5rem", width: 40, height: 40 }}>
+              <GridView />
+            </IconButton>
+
+            <TextField
+              label="Board Name"
+              value={name}
+              fullWidth
+              onChange={(e) => setName(e.target.value)}
+              inputRef={inputRef}
+            />
+          </Stack>
 
           <Stack direction={"row"} spacing={1}>
             <Typography>Color: </Typography>

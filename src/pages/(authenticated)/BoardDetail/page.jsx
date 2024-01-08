@@ -1,21 +1,20 @@
-import { Grid } from "@mui/material";
-import BoardTab from "./BoardTab";
-import AddTaskModal from "./AddTaskModal";
 import { useCallback, useState } from "react";
-import useApp from "../../hooks/use-app";
-import useStore from "../../store";
-import { DragDropContext } from "react-beautiful-dnd";
-import ShiftTaskModal from "./ShiftTaskModal";
+import { useOutletContext } from "react-router-dom";
 
-export const statusMap = {
-  todos: "Todos",
-  inProgress: "In Progress",
-  completed: "Completed",
-};
+import useApp from "../../../hooks/use-app";
+import useStore from "../../../store";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Grid } from "@mui/material";
+
+import ShiftTaskModal from "./ShiftTaskModal";
+import AddTaskModal from "./AddTaskModal";
+import BoardTab from "./BoardTab";
+import { statusMap } from "./status-map";
 
 const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
+const BoardDetailPage = () => {
+  const [{ boardData, boardId, handleLastUpdated }] = useOutletContext();
   const { updateBoardData } = useApp();
   const { setToastr } = useStore();
 
@@ -48,7 +47,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       setLoading(true);
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs); // re-render
-      updateLastUpdated();
+      handleLastUpdated();
     } catch (err) {
       console.log(err);
     } finally {
@@ -68,6 +67,8 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   // TODO: Check twice when deleting
   const handleDeleteTask = useCallback(
     async (tab, taskId) => {
+      if (!window.confirm("Are you sure you want to delete this task?")) return;
+
       const clonedTabs = structuredClone(tabs); // make sure to clone
       const taskIndex = clonedTabs[tab].findIndex((task) => task.id === taskId);
 
@@ -78,7 +79,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
         await sleep(100); // sleep for .1 second
         await updateBoardData(boardId, clonedTabs);
         setTabs(clonedTabs); // re-render
-        updateLastUpdated();
+        handleLastUpdated();
       } catch (err) {
         console.log(err);
       } finally {
@@ -107,7 +108,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs); // re-render
       setAddTaskTo(""); // Add task modal close
-      updateLastUpdated();
+      handleLastUpdated();
     } catch (err) {
       console.log(err);
     } finally {
@@ -139,7 +140,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       setLoading(true);
       await updateBoardData(boardId, clonedTabs);
       setTabs(clonedTabs);
-      updateLastUpdated();
+      handleLastUpdated();
       setToastr("Board updated successfully!", "success");
     } catch (err) {
       console.log(err);
@@ -157,6 +158,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
           onClose={() => setShiftTask(null)}
         />
       )}
+
       {!!addTaskTo && (
         <AddTaskModal
           tabName={statusMap[addTaskTo]}
@@ -167,7 +169,7 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
       )}
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Grid container mt={2} px={4} spacing={2}>
+        <Grid container mt={2} spacing={1}>
           {Object.keys(statusMap).map((status) => (
             <BoardTab
               key={status}
@@ -185,4 +187,4 @@ const BoardInterface = ({ boardData, boardId, updateLastUpdated }) => {
   );
 };
 
-export default BoardInterface;
+export default BoardDetailPage;

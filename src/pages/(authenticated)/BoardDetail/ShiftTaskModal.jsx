@@ -1,7 +1,9 @@
-import { Button, Chip, Dialog, Stack, Typography } from "@mui/material";
-import ModalHeader from "../../components/layouts/ModalHeader";
 import { useState } from "react";
-import { statusMap } from "./BoardInterface";
+
+import { Button, Chip, Dialog, Stack, Typography } from "@mui/material";
+import ModalHeader from "../../../components/layouts/ModalHeader";
+
+import { statusMap } from "./status-map";
 
 const ShiftTaskModal = ({ onClose, task, handleShiftTask }) => {
   const [taskStatus, setTaskStatus] = useState(task.status);

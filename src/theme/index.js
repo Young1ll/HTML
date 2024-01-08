@@ -1,3 +1,4 @@
 export { colors, getThemeTokens } from "./theme-tokens";
 
-export { ThemeContext } from "./theme-context";
+export { ThemeContext, AppThemeProvider } from "./theme-context";
+export { useAppTheme } from "./use-theme";

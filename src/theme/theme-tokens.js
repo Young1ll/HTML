@@ -10,17 +10,24 @@ export const colors = [
   "#D3D3D3",
 ];
 
+export const themeModeOptions = [
+  {
+    label: "Light",
+    id: "light",
+  },
+  {
+    label: "Dark",
+    id: "dark",
+  },
+];
+
 // https://mui.com/material-ui/customization/theme-components/#theme-style-overrides
 // override default values: https://mui.com/material-ui/customization/default-theme/
 // const theme = createTheme({
 //   palette: {
 //     mode: "dark",
-//     primary: {
-
-//     },
-//     secondary: {
-
-//     }
+//     primary: {},
+//     secondary: {},
 //   },
 //   components: {
 //     MuiAlert: {
@@ -33,10 +40,15 @@ export const colors = [
 //         root: {
 //           cursor: "pointer",
 //         },
-//       }
-//     }
+//       },
+//     },
+//     MuiAppBar: {
+//       styleOverrides: {
+//         zIndex: 1100,
+//       },
+//     },
 //   },
-// })
+// });
 
 export const getThemeTokens = (mode) => ({
   palette: {
@@ -44,8 +56,8 @@ export const getThemeTokens = (mode) => ({
     ...(mode === "light"
       ? {
           background: {
-            default: grey[200],
-            paper: grey[300],
+            default: grey[100],
+            paper: grey[200],
           },
           primary: {
             // main color
@@ -99,8 +111,17 @@ export const getThemeTokens = (mode) => ({
           height: "100%",
           width: "100%",
         },
+        body: {
+          height: "100%",
+          width: "100%",
+        },
+        "#root": {
+          height: "100%",
+          width: "100%",
+        },
       },
     },
+    MuiAppBar: {},
     MuiLink: {
       styleOverrides: {
         root: {
@@ -111,6 +132,7 @@ export const getThemeTokens = (mode) => ({
     MuiIconButton: {
       defaultProps: {
         size: "small",
+        color: "inherit",
       },
     },
     MuiSnackbar: {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalHeader from "../../components/layouts/ModalHeader";
+import ModalHeader from "../../../components/layouts/ModalHeader";
 
 import {
   Button,

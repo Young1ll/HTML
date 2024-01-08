@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Launch } from "@mui/icons-material";
+import { colors } from "../../../theme";
+
 import { Box, Grid, IconButton, Stack, Typography } from "@mui/material";
-import { colors } from "../../theme";
+import { Launch } from "@mui/icons-material";
 
 const BoardCard = ({ name, color, createdAt, id }) => {
   const navigate = useNavigate();

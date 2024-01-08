@@ -1,29 +1,26 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Stack,
   Typography,
   Box,
   Link,
-  Button,
-  useTheme,
   IconButton,
 } from "@mui/material";
 import LogoImg from "../../assets/logo.svg";
 import ImageEl from "../../components/utils/ImageEl";
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import useStore from "../../store";
 import AppLoader from "../../components/layouts/AppLoader";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import { ThemeContext } from "../../theme";
 import { DarkMode, LightMode } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import useFireUser from "../../hooks/use-fire-user";
+import ResetPasswordModal from "./ResetPasswordModal";
+import { useAppTheme } from "../../theme";
 // import { useThemeContext } from "../../theme/theme-context";
 
 const initLoginForm = {
@@ -36,16 +33,17 @@ const initRegisterForm = {
   password: "",
 };
 
-const LoginScreen = () => {
-  const theme = useTheme();
-  const { themeMode, setThemeMode } = useContext(ThemeContext);
-  // const { mode, toggleThemeMode } = useThemeContext();
+const AuthPage = () => {
+  const { themeMode, setThemeMode } = useAppTheme();
+  const { signUpAndSaveUserData } = useFireUser();
+  const navigate = useNavigate();
   const { setToastr } = useStore();
   const [isLogin, setIsLogin] = useState(true);
   const [pageLoading, setPageLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [loginForm, setLoginForm] = useState(initLoginForm);
   const [registerForm, setRegisterForm] = useState(initRegisterForm);
+  const [showResetPwModal, setShowResetPwModal] = useState(false);
 
   const handleChange = (e) => {
     if (isLogin) {
@@ -69,20 +67,32 @@ const LoginScreen = () => {
           auth,
           loginForm.email,
           loginForm.password
-        );
+        ).then((userCredentials) => {
+          if (!userCredentials.user.emailVerified) {
+            signOut(auth);
+            navigate("/");
+
+            setToastr("Please verify your email", "error");
+          }
+          navigate("/board", { replace: true });
+        });
       } else {
-        await createUserWithEmailAndPassword(
+        await signUpAndSaveUserData({
           auth,
-          registerForm.email,
-          registerForm.password
-        ).then(() => {
-          if (registerForm.username)
-            return updateProfile(auth.currentUser, {
-              displayName: registerForm.username,
-            });
+          username: registerForm.username,
+          email: registerForm.email,
+          password: registerForm.password,
+          userData: { theme: themeMode, language: "en", role: "newbee" },
         });
 
-        setToastr("Welcome to minimumKanban!", "success");
+        setRegisterForm({
+          username: "",
+          email: "",
+          password: "",
+        });
+        setIsLogin(true);
+
+        // setToastr("Welcome to minimumKanban!", "success");
       }
     } catch (err) {
       const msg = err.code.split("auth/")[1].split("-").join(" ");
@@ -103,7 +113,7 @@ const LoginScreen = () => {
         Ready to explore more?{" "}
         <Link onClick={() => setIsLogin(false)}>Join us</Link> as a member!
       </Typography>
-      <Link>Forgot Password?</Link>
+      <Link onClick={() => setShowResetPwModal(true)}>Forgot Password?</Link>
     </Stack>
   ) : (
     <Box mt={2} display={"flex"} justifyContent={"center"}>
@@ -118,13 +128,16 @@ const LoginScreen = () => {
   return (
     <Container
       sx={{
-        mt: 10,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
       maxWidth="xs"
     >
+      {showResetPwModal && (
+        <ResetPasswordModal closeModal={() => setShowResetPwModal(false)} />
+      )}
+
       <Box position={"absolute"} top={15} right={25}>
         <IconButton
           onClick={() => setThemeMode(themeMode === "dark" ? "light" : "dark")}
@@ -133,7 +146,7 @@ const LoginScreen = () => {
         </IconButton>
       </Box>
 
-      <Stack spacing={6} alignItems="center" textAlign="center">
+      <Stack mt={10} spacing={6} alignItems="center" textAlign="center">
         <Stack direction={"row"} spacing={1}>
           <ImageEl
             sx={{ height: 40 }}
@@ -189,4 +202,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default AuthPage;

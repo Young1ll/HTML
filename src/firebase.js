@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDDBenJU9jJ3dlY7oygms_-G9dLMSNVsGM",
@@ -16,6 +17,7 @@ const firebaseConfig = {
 // https://firebase.google.com/docs/web/setup?hl=ko#available-libraries
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const fbFunctions = getFunctions(app);
 
@@ -23,4 +25,5 @@ if (process.env.NODE_ENV === "development") {
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFirestoreEmulator(db, "localhost", 8080);
   connectFunctionsEmulator(fbFunctions, "localhost", 5001);
+  connectStorageEmulator(storage, "localhost", 9199);
 }

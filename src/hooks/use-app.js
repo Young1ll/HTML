@@ -49,12 +49,6 @@ const useApp = () => {
     }
   };
 
-  /**
-   * Fetches the board data for a given board ID.
-   *
-   * @param {string} boardId - The ID of the board to fetch.
-   * @return {object} The data of the fetched board, or undefined if the board does not exist.
-   */
   const fetchBoard = async (boardId) => {
     const docRef = doc(db, `users/${uid}/boardsData/${boardId}`);
     try {
@@ -68,23 +62,29 @@ const useApp = () => {
     }
   };
 
-  /**
-   * Creates a board with the given name and color.
-   *
-   * @param {Object} param - An object containing the name and color of the board.
-   * @param {string} param.name - The name of the board.
-   * @param {string} param.color - The color of the board.
-   * @return {Promise<void>} A promise that resolves when the board is successfully created.
-   */
+  const updateBoard = async ({ boardId, name, description, color }) => {
+    const boardDocRef = doc(db, `users/${uid}/boards/${boardId}`);
+    const boardDataDocRef = doc(db, `users/${uid}/boardsData/${boardId}`);
+    try {
+      await updateDoc(boardDocRef, { name, description, color });
+      await updateDoc(boardDataDocRef, { lastUpdated: serverTimestamp() });
+    } catch (err) {
+      setToastr("Error while updating board", "error");
+      throw err;
+    }
+  };
+
   const createBoard = async ({ name, color }) => {
     try {
       const doc = await addDoc(boardCollRef, {
         name,
+        description: "",
         color,
         createdAt: serverTimestamp(), //<-- serverTimestamp 알아보기: https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
       });
       addBoard({
         name,
+        description: "",
         color,
         createdAt: new Date().toLocaleString("en-US"),
         id: doc.id,
@@ -95,12 +95,6 @@ const useApp = () => {
     }
   };
 
-  /**
-   * Fetches the boards from the server and sets them in the state.
-   *
-   * @param {function} setLoading - A function to set the loading state.
-   * @return {void}
-   */
   const fetchBoards = async (setLoading) => {
     try {
       const q = query(boardCollRef, orderBy("createdAt", "desc"));
@@ -120,9 +114,10 @@ const useApp = () => {
   };
 
   return {
+    createBoard,
+    updateBoard,
     fetchBoard,
     fetchBoards,
-    createBoard,
     updateBoardData,
     deleteBoard,
   };

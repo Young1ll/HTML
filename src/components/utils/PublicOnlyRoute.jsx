@@ -1,9 +1,14 @@
 import { Navigate } from "react-router-dom";
 import useStore from "../../store";
+import { useEffect } from "react";
 
 const PublicOnlyRoute = ({ Component }) => {
   const { isLoggedIn } = useStore();
-  return isLoggedIn ? <Navigate to="/boards" replace /> : <Component />;
+  useEffect(() => {
+    console.log(isLoggedIn);
+  }, []);
+  // return isLoggedIn ? <Navigate to="/boards" replace /> : <Component />;
+  return isLoggedIn ? null : <Component />;
 };
 
 export default PublicOnlyRoute;

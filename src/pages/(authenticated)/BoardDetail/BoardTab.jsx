@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { AddCircleOutline } from "@mui/icons-material";
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
+
 import Task from "./Task";
-import { memo } from "react";
 // import { Droppable } from "react-beautiful-dnd";
-import Droppable from "../../components/utils/StrictModeDroppable";
+import Droppable from "../../../components/utils/StrictModeDroppable";
 
 const BoardTab = ({
   name,
@@ -37,14 +38,13 @@ const BoardTab = ({
               </IconButton>
             </Stack>
 
-            <Stack mt={2} spacing={1}>
+            <Stack mt={2} spacing={0.5}>
               {tasks.map((task, index) => (
                 <Task
                   key={task.id}
                   index={index}
                   id={task.id}
                   title={task.title}
-                  description={task.description}
                   deleteTask={() => deleteTask(status, task.id)}
                   openShiftTask={() => openShiftTask(status, task)}
                 />
