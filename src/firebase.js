@@ -21,6 +21,7 @@ export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const fbFunctions = getFunctions(app);
 
+// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === "development") {
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFirestoreEmulator(db, "localhost", 8080);

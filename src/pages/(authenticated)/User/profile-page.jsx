@@ -11,11 +11,11 @@ import {
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import useFireUser from "../../../hooks/use-fire-user";
 
 const ProfilePage = () => {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   // TODO: db에 userId 존재하지 root 또는 userNotFound page 표시
 
   const { currentUser } = getAuth();

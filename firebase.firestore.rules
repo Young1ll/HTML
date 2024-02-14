@@ -1,5 +1,6 @@
 rules_version = '2';
 
+// https://youtu.be/5H0I97Pe9YY?si=XlG-RKuQ2_vHoCIf&t=27012
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -15,5 +16,35 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write;
     }
+
+    // function isOwner(userId) {
+    //   return request.auth != null && request.auth.uid == userId
+    // }
+
+    // function DocOnlyHasRequiredFields(requiredFields) {
+    //   let incomingData = request.resource.data;
+    //   return incomingData.keys().hasAll(requiredFields) && incomingData.keys().hasOnly(requiredFields);
+    // }
+
+    // match /users/{userId}/boards/{boardId} {
+      
+    //   function verifyDocFields() {
+    //     let incomingData = request.resource.data;
+    //     return incomingData.name is string && incomingData.name.size() <= 20 && incomingData.name.matches(`^[a-zA-Z0-9 \t]{1,20}`)
+    //     && incomingData.color is number && incomingData.color >= 0 && incomingData.color <= 5 && incomingData.createdAt is timestamp && incomingData.createdAt == request.time;
+    //   }
+
+    //   allow read: if isOwner(userId);
+    //   allow delete: if isOwner(userId);
+    //   allow create: if isOwner(userId) && DocOnlyHasRequiredFields(['color', 'createdAt', 'name']) && verifyDocFields();
+    // }
+
+    // match /users/{userId}/boardData/{boardId} {
+
+    //   function verifyDocFields() {
+
+    //   }
+    // }
   }
+
 }

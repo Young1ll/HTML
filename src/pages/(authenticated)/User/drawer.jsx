@@ -15,7 +15,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 
 const UserDrawer = () => {

@@ -7,19 +7,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 import { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import useFireUser from "../../../hooks/use-fire-user";
 import { themeModeOptions } from "../../../theme/theme-tokens";
 import { useAppTheme } from "../../../theme";
 
 const PreferencesPage = () => {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   // TODO: db에 userId 존재하지 root 또는 userNotFound page 표시
   const [loading, setLoading] = useState(false);
 
-  const { currentUser } = getAuth();
+  // const { currentUser } = getAuth();
   const { updateUserPreferencesSetting } = useFireUser();
   const { themeMode, setThemeMode } = useAppTheme();
   const [themeValue, setSelectedTheme] = useState();
