@@ -23,7 +23,6 @@ const ResetPasswordModal = ({ closeModal }) => {
 
   return (
     <Dialog fullWidth maxWidth="xs" open onClose={closeModal}>
-      {" "}
       <Stack p={2}>
         <ModalHeader title={"Reset Password"} onClose={closeModal} />
 

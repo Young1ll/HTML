@@ -6,6 +6,7 @@ import {
   Box,
   Link,
   IconButton,
+  Button,
 } from "@mui/material";
 import LogoImg from "../../assets/logo.svg";
 import ImageEl from "../../components/utils/ImageEl";
@@ -21,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import useFireUser from "../../hooks/use-fire-user";
 import ResetPasswordModal from "./ResetPasswordModal";
 import { useAppTheme } from "../../theme";
+import TesterAccountModal from "./TesterAccountModal";
+
 // import { useThemeContext } from "../../theme/theme-context";
 
 const initLoginForm = {
@@ -44,6 +47,7 @@ const AuthPage = () => {
   const [loginForm, setLoginForm] = useState(initLoginForm);
   const [registerForm, setRegisterForm] = useState(initRegisterForm);
   const [showResetPwModal, setShowResetPwModal] = useState(false);
+  const [showTesterModal, setShowTesterModal] = useState(false);
 
   const handleChange = (e) => {
     if (isLogin) {
@@ -137,6 +141,9 @@ const AuthPage = () => {
       {showResetPwModal && (
         <ResetPasswordModal closeModal={() => setShowResetPwModal(false)} />
       )}
+      {showTesterModal && (
+        <TesterAccountModal closeModal={() => setShowTesterModal(false)} />
+      )}
 
       <Box position={"absolute"} top={15} right={25}>
         <IconButton
@@ -164,6 +171,14 @@ const AuthPage = () => {
           Visualize your Workflow for Increased Productivity. Access Your Tasks
           Anytime, Anywhere.
         </Typography>
+
+        <Button
+          variant="outlined"
+          style={{ marginTop: 16 }}
+          onClick={() => setShowTesterModal(true)}
+        >
+          TESTER!
+        </Button>
 
         {isLogin ? (
           <LoginForm
